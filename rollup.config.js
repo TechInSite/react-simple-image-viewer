@@ -1,17 +1,26 @@
 import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
 
+const outputDefaults = {
+    sourcemap: true,
+    globals: { react: 'React' },
+}
+
 export default {
   input: './src/index.ts',
 
   output: [
     {
-      name: 'index.js',
-      sourcemap: true,
-      file: './dist/index.js',
-      format: 'esm',
-      globals: { react: 'React' },
+      file: './dist/index.cjs.js',
+      format: 'cjs',
+      exports: 'default',
+      ...outputDefaults,
     },
+    {
+        file: './dist/index.esm.js',
+        format: 'esm',
+        ...outputDefaults,
+      },
   ],
 
   plugins: [
