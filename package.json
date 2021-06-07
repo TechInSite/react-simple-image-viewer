@@ -26,12 +26,8 @@
   "devDependencies": {
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
-    "@types/styled-components": "4.1.8",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "typescript": "^3.6.2"
-  },
-  "dependencies": {
-    "styled-components": "^4.4.1"
   }
 }

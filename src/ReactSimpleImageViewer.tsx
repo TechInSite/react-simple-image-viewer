@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrapper, Content, Slide, Image, Close, Prev, Next } from './styles';
+import styles from './styles.module.css';
 
 interface IProps {
   src: string[];
@@ -89,31 +89,31 @@ export default class ReactSimpleImageViewer extends React.Component<IProps, ISta
     const { currentIndex } = this.state;
 
     return (
-      <Wrapper
+      <div
         id="ReactSimpleImageViewer"
+        className={`${styles.wrapper} react-simple-image-viewer__modal`}
         onKeyDown={this.handleKeyDown}
         onClick={this.handleClick}
-        className="react-simple-image-viewer__modal"
         style={this.props.backgroundStyle}
       >
-        <Close className="react-simple-image-viewer__close" onClick={this.callOnClose}>
+        <span className={`${styles.close} react-simple-image-viewer__close`} onClick={this.callOnClose}>
           &times;
-        </Close>
+        </span>
 
-        {src.length > 1 && <Prev className="react-simple-image-viewer__previous" onClick={() => this.changeImage(-1)}>
+        {src.length > 1 && <span className={`${styles.navigation} ${styles.prev} react-simple-image-viewer__previous`} onClick={() => this.changeImage(-1)}>
           &#10094;
-        </Prev>}
+        </span>}
 
-        {src.length > 1 && <Next className="react-simple-image-viewer__next" onClick={() => this.changeImage(1)}>
+        {src.length > 1 && <span className={`${styles.navigation} ${styles.next} react-simple-image-viewer__next`} onClick={() => this.changeImage(1)}>
           &#10095;
-        </Next>}
+        </span>}
 
-        <Content className="react-simple-image-viewer__modal-content">
-          <Slide className="react-simple-image-viewer__slide">
-            <Image src={src[currentIndex]} alt=""/>
-          </Slide>
-        </Content>
-      </Wrapper>
+        <div className={`${styles.content} react-simple-image-viewer__modal-content`}>
+          <div className={`${styles.slide} react-simple-image-viewer__slide`}>
+            <img className={styles.image} src={src[currentIndex]} alt=""/>
+          </div>
+        </div>
+      </div>
     );
   }
 }
