@@ -40,50 +40,50 @@ styleInject(css_248z);
 const ReactSimpleImageViewer = (props) => {
     var _a;
     const [currentIndex, setCurrentIndex] = React.useState((_a = props.currentIndex) !== null && _a !== void 0 ? _a : 0);
-    const changeImage = (delta) => {
+    const changeImage = React.useCallback((delta) => {
         let nextIndex = (currentIndex + delta) % props.src.length;
         if (nextIndex < 0)
             nextIndex = props.src.length - 1;
         setCurrentIndex(nextIndex);
-    };
-    const handleKeyDown = (event) => {
+    }, [setCurrentIndex]);
+    const handleClick = React.useCallback((event) => {
         var _a;
-        if (event.key === 'Escape') {
+        if (event.target && event.target.id === "ReactSimpleImageViewer") {
             (_a = props.onClose) === null || _a === void 0 ? void 0 : _a.call(props);
         }
-        if (['ArrowLeft', 'h'].includes(event.key)) {
+    }, [props.onClose]);
+    const handleKeyDown = React.useCallback((event) => {
+        var _a;
+        if (event.key === "Escape") {
+            (_a = props.onClose) === null || _a === void 0 ? void 0 : _a.call(props);
+        }
+        if (["ArrowLeft", "h"].includes(event.key)) {
             changeImage(-1);
         }
-        if (['ArrowRight', 'l'].includes(event.key)) {
+        if (["ArrowRight", "l"].includes(event.key)) {
             changeImage(1);
         }
-    };
-    const handleWheel = (event) => {
+    }, [props.onClose, changeImage]);
+    const handleWheel = React.useCallback((event) => {
         if (event.wheelDeltaY > 0) {
             changeImage(-1);
         }
         else {
             changeImage(1);
         }
-    };
-    const handleClick = (event) => {
-        var _a;
-        if (event.target && event.target.id === 'ReactSimpleImageViewer') {
-            (_a = props.onClose) === null || _a === void 0 ? void 0 : _a.call(props);
-        }
-    };
+    }, [changeImage]);
     React.useEffect(() => {
-        document.addEventListener('keydown', handleKeyDown);
-        document.addEventListener('wheel', handleWheel);
+        document.addEventListener("keydown", handleKeyDown);
+        document.addEventListener("wheel", handleWheel);
         return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-            document.removeEventListener('wheel', handleWheel);
+            document.removeEventListener("keydown", handleKeyDown);
+            document.removeEventListener("wheel", handleWheel);
         };
-    });
+    }, [handleKeyDown, handleWheel]);
     return (React__default['default'].createElement("div", { id: "ReactSimpleImageViewer", className: `${styles.wrapper} react-simple-image-viewer__modal`, onKeyDown: handleKeyDown, onClick: handleClick, style: props.backgroundStyle },
         React__default['default'].createElement("span", { className: `${styles.close} react-simple-image-viewer__close`, onClick: () => { var _a; return (_a = props.onClose) === null || _a === void 0 ? void 0 : _a.call(props); } }, "\u00D7"),
-        props.src.length > 1 && React__default['default'].createElement("span", { className: `${styles.navigation} ${styles.prev} react-simple-image-viewer__previous`, onClick: () => changeImage(-1) }, "\u276E"),
-        props.src.length > 1 && React__default['default'].createElement("span", { className: `${styles.navigation} ${styles.next} react-simple-image-viewer__next`, onClick: () => changeImage(1) }, "\u276F"),
+        props.src.length > 1 && (React__default['default'].createElement("span", { className: `${styles.navigation} ${styles.prev} react-simple-image-viewer__previous`, onClick: () => changeImage(-1) }, "\u276E")),
+        props.src.length > 1 && (React__default['default'].createElement("span", { className: `${styles.navigation} ${styles.next} react-simple-image-viewer__next`, onClick: () => changeImage(1) }, "\u276F")),
         React__default['default'].createElement("div", { className: `${styles.content} react-simple-image-viewer__modal-content` },
             React__default['default'].createElement("div", { className: `${styles.slide} react-simple-image-viewer__slide` },
                 React__default['default'].createElement("img", { className: styles.image, src: props.src[currentIndex], alt: "" })))));
